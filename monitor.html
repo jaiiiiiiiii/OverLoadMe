@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Monitor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .count {
+            font-size: 48px;
+            color: #007bff;
+        }
+    </style>
+    <script>
+        async function updateCount() {
+            try {
+                const response = await fetch('/get_count');
+                const data = await response.json();
+                document.getElementById('count').textContent = data.count;
+            } catch (error) {
+                console.error("Error fetching request count:", error);
+            }
+        }
+
+        // Refresh the count every second
+        setInterval(updateCount, 1000);
+        window.onload = updateCount;
+    </script>
+</head>
+<body>
+    <h1>Real-Time Traffic Monitor</h1>
+    <p>Total requests received:</p>
+    <div class="count" id="count">0</div>
+</body>
+</html>
